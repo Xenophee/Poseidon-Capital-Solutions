@@ -1,7 +1,11 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.service.BidListService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,15 +15,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
-
 @Controller
 public class BidListController {
-    // TODO: Inject Bid service
+
+    public final Logger logger = LoggerFactory.getLogger(BidListController.class);
+
+    private final BidListService bidListService;
+
+    @Autowired
+    public BidListController(BidListService bidListService) {
+        this.bidListService = bidListService;
+    }
+
 
     @RequestMapping("/bidList/list")
-    public String home(Model model)
-    {
-        // TODO: call service find all bids to show to the view
+    public String home(Model model) {
+        model.addAttribute("bidLists", bidListService.getAll());
         return "bidList/list";
     }
 
@@ -30,26 +41,48 @@ public class BidListController {
 
     @PostMapping("/bidList/validate")
     public String validate(@Valid BidList bid, BindingResult result, Model model) {
-        // TODO: check data valid and save to db, after saving return bid list
-        return "bidList/add";
+
+        logger.info("Request to add new Bid : {}", bid);
+
+        if (result.hasErrors()) {
+            logger.warn("Invalid data for registration : {}", result.getAllErrors());
+            return "bidList/add";
+        }
+
+        bidListService.save(bid);
+        logger.info("Bid added : {}", bid);
+        return "redirect:/bidList/list";
     }
 
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get Bid by Id and to model then show to the form
+        BidList bidList = bidListService.getById(id);
+        model.addAttribute("bidList", bidList);
         return "bidList/update";
     }
 
     @PostMapping("/bidList/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList,
-                             BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Bid and return list Bid
+                            BindingResult result, Model model) {
+
+        logger.info("Request to update Bid : {}", bidList);
+
+        if (result.hasErrors()) {
+            logger.warn("Invalid data for registration : {}", result.getAllErrors());
+            return "bidList/update";
+        }
+
+        bidListService.update(id, bidList);
+        logger.info("Bid updated : {}", id);
+
         return "redirect:/bidList/list";
     }
 
     @GetMapping("/bidList/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Bid by Id and delete the bid, return to Bid list
+        logger.info("Request to delete Bid : {}", id);
+        bidListService.delete(id);
+        logger.info("Bid deleted : {}", id);
         return "redirect:/bidList/list";
     }
 }
