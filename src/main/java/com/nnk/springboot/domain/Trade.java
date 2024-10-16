@@ -1,6 +1,9 @@
 package com.nnk.springboot.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,9 +20,19 @@ public class Trade {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer TradeId;
+
+    @NotEmpty(message = "Account is mandatory")
+    @Size(min = 1, max = 30, message = "Account must be between 1 and 30 characters")
     private String account;
+
+    @NotEmpty(message = "Type is mandatory")
+    @Size(min = 1, max = 30, message = "Type must be between 1 and 30 characters")
     private String type;
+
+    @Min(value = 1, message = "Buy quantity must be greater than zero")
     private Double buyQuantity;
+
+
     private Double sellQuantity;
     private Double buyPrice;
     private Double sellPrice;
@@ -38,32 +51,9 @@ public class Trade {
     private String sourceListId;
     private String side;
 
-    // Custom constructor
-    public Trade(String account, String type, Double buyQuantity, Double sellQuantity, Double buyPrice, Double sellPrice, LocalDateTime tradeDate, String security, String status, String trader, String benchmark, String book, String creationName, LocalDateTime creationDate, String revisionName, LocalDateTime revisionDate, String dealName, String dealType, String sourceListId, String side) {
+    public Trade(String account, String type, Double buyQuantity) {
         this.account = account;
         this.type = type;
         this.buyQuantity = buyQuantity;
-        this.sellQuantity = sellQuantity;
-        this.buyPrice = buyPrice;
-        this.sellPrice = sellPrice;
-        this.tradeDate = tradeDate;
-        this.security = security;
-        this.status = status;
-        this.trader = trader;
-        this.benchmark = benchmark;
-        this.book = book;
-        this.creationName = creationName;
-        this.creationDate = creationDate;
-        this.revisionName = revisionName;
-        this.revisionDate = revisionDate;
-        this.dealName = dealName;
-        this.dealType = dealType;
-        this.sourceListId = sourceListId;
-        this.side = side;
-    }
-
-    public Trade(String account, String type) {
-        this.account = account;
-        this.type = type;
     }
 }
