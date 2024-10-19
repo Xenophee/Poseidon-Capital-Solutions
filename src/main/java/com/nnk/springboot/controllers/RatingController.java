@@ -45,7 +45,7 @@ public class RatingController {
 
         if (result.hasErrors()) {
             logger.warn("Invalid data for registration : {}", result.getAllErrors());
-            return "/rating/add";
+            return "rating/add";
         }
 
         ratingService.save(rating);
