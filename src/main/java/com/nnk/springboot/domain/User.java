@@ -2,13 +2,11 @@ package com.nnk.springboot.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = "users")
 public class User {
 
