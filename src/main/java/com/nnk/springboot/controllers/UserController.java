@@ -36,7 +36,8 @@ public class UserController {
     }
 
     @GetMapping("/user/add")
-    public String addUser(User bid) {
+    public String addUser(Model model) {
+        model.addAttribute("user", new User());
         return "user/add";
     }
 
