@@ -1,8 +1,10 @@
 package com.nnk.springboot.repositories;
 
-import com.nnk.springboot.domain.Rating;
+import com.nnk.springboot.domain.RatingEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface RatingRepository extends JpaRepository<Rating, Integer> {
+@Repository
+public interface RatingRepository extends JpaRepository<RatingEntity, Integer> {
 
 }
