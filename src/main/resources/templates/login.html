@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Home</title>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css" >
+</head>
+
+<body>
+<main>
+    <div class="container-fluid d-flex align-items-center justify-content-center">
+        <div class="p-5 my-5 border d-flex flex-column align-items-center justify-content-center">
+
+            <form th:action="@{/app/login}" method="post" role="form">
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger text-wrap" role="alert">Invalid username or password</div>
+                </div>
+
+                <div class="row">
+                    <div class="mt-5 w-100">
+                        <div class="mb-3">
+                            <label for="username" class="visually-hidden">Username : </label>
+                            <input type="text" class="form-control" id="username" name="username" aria-required="true" required/>
+                        </div>
+
+                        <div class="mt-3">
+                            <label for="password" class="visually-hidden">Password : </label>
+                            <input type="password" class="form-control" id="password" name="password" aria-required="true" required/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 d-flex justify-content-center">
+                    <button class="btn btn-primary w-100" type="submit">Sign in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>
