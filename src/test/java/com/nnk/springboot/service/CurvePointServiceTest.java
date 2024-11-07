@@ -1,6 +1,6 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.domain.CurvePoint;
+import com.nnk.springboot.domain.CurvePointEntity;
 import com.nnk.springboot.repositories.CurvePointRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class CurvePointServiceTest {
 
     @Test
     void getAll_returnsAllCurvePoints() {
-        when(curvePointRepository.findAll()).thenReturn(Arrays.asList(mock(CurvePoint.class), mock(CurvePoint.class)));
+        when(curvePointRepository.findAll()).thenReturn(Arrays.asList(mock(CurvePointEntity.class), mock(CurvePointEntity.class)));
 
         curvePointService.getAll();
 
@@ -37,16 +37,16 @@ class CurvePointServiceTest {
 
     @Test
     void save_savesAndReturnsCurvePoint() {
-        when(curvePointRepository.save(any(CurvePoint.class))).thenReturn(mock(CurvePoint.class));
+        when(curvePointRepository.save(any(CurvePointEntity.class))).thenReturn(mock(CurvePointEntity.class));
 
-        curvePointService.save(mock(CurvePoint.class));
+        curvePointService.save(mock(CurvePointEntity.class));
 
-        verify(curvePointRepository).save(any(CurvePoint.class));
+        verify(curvePointRepository).save(any(CurvePointEntity.class));
     }
 
     @Test
     void getById_existingId_returnsCurvePoint() {
-        when(curvePointRepository.findById(anyInt())).thenReturn(Optional.of(mock(CurvePoint.class)));
+        when(curvePointRepository.findById(anyInt())).thenReturn(Optional.of(mock(CurvePointEntity.class)));
 
         curvePointService.getById(anyInt());
 
@@ -63,18 +63,18 @@ class CurvePointServiceTest {
 
     @Test
     void update_existingId_updatesAndReturnsCurvePoint() {
-        CurvePoint existingCurvePoint = new CurvePoint();
-        existingCurvePoint.setCurveId(1);
-        CurvePoint newCurvePoint = new CurvePoint();
-        newCurvePoint.setCurveId(2);
+        CurvePointEntity existingCurvePointEntity = new CurvePointEntity();
+        existingCurvePointEntity.setCurveId(1);
+        CurvePointEntity newCurvePointEntity = new CurvePointEntity();
+        newCurvePointEntity.setCurveId(2);
 
-        when(curvePointRepository.findById(1)).thenReturn(Optional.of(existingCurvePoint));
-        when(curvePointRepository.save(existingCurvePoint)).thenReturn(existingCurvePoint);
+        when(curvePointRepository.findById(1)).thenReturn(Optional.of(existingCurvePointEntity));
+        when(curvePointRepository.save(existingCurvePointEntity)).thenReturn(existingCurvePointEntity);
 
-        curvePointService.update(1, newCurvePoint);
+        curvePointService.update(1, newCurvePointEntity);
 
         verify(curvePointRepository).findById(1);
-        verify(curvePointRepository).save(existingCurvePoint);
+        verify(curvePointRepository).save(existingCurvePointEntity);
     }
 
 

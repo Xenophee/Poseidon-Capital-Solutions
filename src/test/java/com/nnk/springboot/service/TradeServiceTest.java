@@ -1,6 +1,6 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.domain.Trade;
+import com.nnk.springboot.domain.TradeEntity;
 import com.nnk.springboot.repositories.TradeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class TradeServiceTest {
 
     @Test
     void getAll_returnsAllTrades() {
-        when(tradeRepository.findAll()).thenReturn(Arrays.asList(mock(Trade.class), mock(Trade.class)));
+        when(tradeRepository.findAll()).thenReturn(Arrays.asList(mock(TradeEntity.class), mock(TradeEntity.class)));
 
         tradeService.getAll();
 
@@ -38,16 +38,16 @@ class TradeServiceTest {
 
     @Test
     void save_savesAndReturnsTrade() {
-        when(tradeRepository.save(any(Trade.class))).thenReturn(mock(Trade.class));
+        when(tradeRepository.save(any(TradeEntity.class))).thenReturn(mock(TradeEntity.class));
 
-        tradeService.save(mock(Trade.class));
+        tradeService.save(mock(TradeEntity.class));
 
-        verify(tradeRepository).save(any(Trade.class));
+        verify(tradeRepository).save(any(TradeEntity.class));
     }
 
     @Test
     void getById_existingId_returnsTrade() {
-        when(tradeRepository.findById(anyInt())).thenReturn(Optional.of(mock(Trade.class)));
+        when(tradeRepository.findById(anyInt())).thenReturn(Optional.of(mock(TradeEntity.class)));
 
         tradeService.getById(anyInt());
 
@@ -65,18 +65,18 @@ class TradeServiceTest {
 
     @Test
     void update_existingId_updatesAndReturnsTrade() {
-        Trade existingTrade = new Trade();
-        existingTrade.setAccount("oldAccount");
-        Trade newTrade = new Trade();
-        newTrade.setAccount("newAccount");
+        TradeEntity existingTradeEntity = new TradeEntity();
+        existingTradeEntity.setAccount("oldAccount");
+        TradeEntity newTradeEntity = new TradeEntity();
+        newTradeEntity.setAccount("newAccount");
 
-        when(tradeRepository.findById(1)).thenReturn(Optional.of(existingTrade));
-        when(tradeRepository.save(existingTrade)).thenReturn(existingTrade);
+        when(tradeRepository.findById(1)).thenReturn(Optional.of(existingTradeEntity));
+        when(tradeRepository.save(existingTradeEntity)).thenReturn(existingTradeEntity);
 
-        tradeService.update(1, newTrade);
+        tradeService.update(1, newTradeEntity);
 
         verify(tradeRepository).findById(1);
-        verify(tradeRepository).save(existingTrade);
+        verify(tradeRepository).save(existingTradeEntity);
     }
 
 

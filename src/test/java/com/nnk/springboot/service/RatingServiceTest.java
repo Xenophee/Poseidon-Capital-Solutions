@@ -1,6 +1,6 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.domain.Rating;
+import com.nnk.springboot.domain.RatingEntity;
 import com.nnk.springboot.repositories.RatingRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class RatingServiceTest {
 
     @Test
     void getAll_returnsAllRatings() {
-        when(ratingRepository.findAll()).thenReturn(Arrays.asList(mock(Rating.class), mock(Rating.class)));
+        when(ratingRepository.findAll()).thenReturn(Arrays.asList(mock(RatingEntity.class), mock(RatingEntity.class)));
 
         ratingService.getAll();
 
@@ -37,16 +37,16 @@ class RatingServiceTest {
 
     @Test
     void save_savesAndReturnsRating() {
-        when(ratingRepository.save(any(Rating.class))).thenReturn(mock(Rating.class));
+        when(ratingRepository.save(any(RatingEntity.class))).thenReturn(mock(RatingEntity.class));
 
-        ratingService.save(mock(Rating.class));
+        ratingService.save(mock(RatingEntity.class));
 
-        verify(ratingRepository).save(any(Rating.class));
+        verify(ratingRepository).save(any(RatingEntity.class));
     }
 
     @Test
     void getById_existingId_returnsRating() {
-        when(ratingRepository.findById(anyInt())).thenReturn(Optional.of(mock(Rating.class)));
+        when(ratingRepository.findById(anyInt())).thenReturn(Optional.of(mock(RatingEntity.class)));
 
         ratingService.getById(anyInt());
 
@@ -63,18 +63,18 @@ class RatingServiceTest {
 
     @Test
     void update_existingId_updatesAndReturnsRating() {
-        Rating existingRating = new Rating();
-        existingRating.setMoodysRating("oldMoodys");
-        Rating newRating = new Rating();
-        newRating.setMoodysRating("newMoodys");
+        RatingEntity existingRatingEntity = new RatingEntity();
+        existingRatingEntity.setMoodysRating("oldMoodys");
+        RatingEntity newRatingEntity = new RatingEntity();
+        newRatingEntity.setMoodysRating("newMoodys");
 
-        when(ratingRepository.findById(1)).thenReturn(Optional.of(existingRating));
-        when(ratingRepository.save(existingRating)).thenReturn(existingRating);
+        when(ratingRepository.findById(1)).thenReturn(Optional.of(existingRatingEntity));
+        when(ratingRepository.save(existingRatingEntity)).thenReturn(existingRatingEntity);
 
-        ratingService.update(1, newRating);
+        ratingService.update(1, newRatingEntity);
 
         verify(ratingRepository).findById(1);
-        verify(ratingRepository).save(existingRating);
+        verify(ratingRepository).save(existingRatingEntity);
     }
 
 

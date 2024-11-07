@@ -1,6 +1,6 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.domain.BidListEntity;
 import com.nnk.springboot.repositories.BidListRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ class BidListServiceTest {
 
     @Test
     void getAll_returnsAllBids() {
-        when(bidListRepository.findAll()).thenReturn(Arrays.asList(mock(BidList.class), mock(BidList.class)));
+        when(bidListRepository.findAll()).thenReturn(Arrays.asList(mock(BidListEntity.class), mock(BidListEntity.class)));
 
         bidListService.getAll();
 
@@ -39,17 +39,17 @@ class BidListServiceTest {
 
     @Test
     void save_savesAndReturnsBid() {
-        when(bidListRepository.save(any(BidList.class))).thenReturn(mock(BidList.class));
+        when(bidListRepository.save(any(BidListEntity.class))).thenReturn(mock(BidListEntity.class));
 
-        bidListService.save(mock(BidList.class));
+        bidListService.save(mock(BidListEntity.class));
 
-        verify(bidListRepository).save(any(BidList.class));
+        verify(bidListRepository).save(any(BidListEntity.class));
     }
 
 
     @Test
     void getById_existingId_returnsBid() {
-        when(bidListRepository.findById(anyInt())).thenReturn(Optional.of(mock(BidList.class)));
+        when(bidListRepository.findById(anyInt())).thenReturn(Optional.of(mock(BidListEntity.class)));
 
         bidListService.getById(anyInt());
 
@@ -68,9 +68,9 @@ class BidListServiceTest {
 
     @Test
     void update_existingId_updatesAndReturnsBid() {
-        BidList existingBid = new BidList();
+        BidListEntity existingBid = new BidListEntity();
         existingBid.setAccount("oldAccount");
-        BidList newBid = new BidList();
+        BidListEntity newBid = new BidListEntity();
         newBid.setAccount("newAccount");
 
         when(bidListRepository.findById(1)).thenReturn(Optional.of(existingBid));

@@ -1,6 +1,6 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.domain.RuleName;
+import com.nnk.springboot.domain.RuleNameEntity;
 import com.nnk.springboot.repositories.RuleNameRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class RuleNameServiceTest {
 
     @Test
     void getAll_returnsAllRuleNames() {
-        when(ruleNameRepository.findAll()).thenReturn(Arrays.asList(mock(RuleName.class), mock(RuleName.class)));
+        when(ruleNameRepository.findAll()).thenReturn(Arrays.asList(mock(RuleNameEntity.class), mock(RuleNameEntity.class)));
 
         ruleNameService.getAll();
 
@@ -38,17 +38,17 @@ class RuleNameServiceTest {
 
     @Test
     void save_savesAndReturnsRuleName() {
-        when(ruleNameRepository.save(any(RuleName.class))).thenReturn(mock(RuleName.class));
+        when(ruleNameRepository.save(any(RuleNameEntity.class))).thenReturn(mock(RuleNameEntity.class));
 
-        ruleNameService.save(mock(RuleName.class));
+        ruleNameService.save(mock(RuleNameEntity.class));
 
-        verify(ruleNameRepository).save(any(RuleName.class));
+        verify(ruleNameRepository).save(any(RuleNameEntity.class));
     }
 
 
     @Test
     void getById_existingId_returnsRuleName() {
-        when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.of(mock(RuleName.class)));
+        when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.of(mock(RuleNameEntity.class)));
 
         ruleNameService.getById(anyInt());
 
@@ -67,18 +67,18 @@ class RuleNameServiceTest {
 
     @Test
     void update_existingId_updatesAndReturnsRuleName() {
-        RuleName existingRuleName = new RuleName();
-        existingRuleName.setName("oldName");
-        RuleName newRuleName = new RuleName();
-        newRuleName.setName("newName");
+        RuleNameEntity existingRuleNameEntity = new RuleNameEntity();
+        existingRuleNameEntity.setName("oldName");
+        RuleNameEntity newRuleNameEntity = new RuleNameEntity();
+        newRuleNameEntity.setName("newName");
 
-        when(ruleNameRepository.findById(1)).thenReturn(Optional.of(existingRuleName));
-        when(ruleNameRepository.save(existingRuleName)).thenReturn(existingRuleName);
+        when(ruleNameRepository.findById(1)).thenReturn(Optional.of(existingRuleNameEntity));
+        when(ruleNameRepository.save(existingRuleNameEntity)).thenReturn(existingRuleNameEntity);
 
-        ruleNameService.update(1, newRuleName);
+        ruleNameService.update(1, newRuleNameEntity);
 
         verify(ruleNameRepository).findById(1);
-        verify(ruleNameRepository).save(existingRuleName);
+        verify(ruleNameRepository).save(existingRuleNameEntity);
     }
 
 

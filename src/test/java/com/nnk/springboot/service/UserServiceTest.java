@@ -1,6 +1,6 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.domain.User;
+import com.nnk.springboot.domain.UserEntity;
 import com.nnk.springboot.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class UserServiceTest {
 
     @Test
     void getAll_returnsAllUsers() {
-        when(userRepository.findAll()).thenReturn(Arrays.asList(mock(User.class), mock(User.class)));
+        when(userRepository.findAll()).thenReturn(Arrays.asList(mock(UserEntity.class), mock(UserEntity.class)));
 
         userService.getAll();
 
@@ -37,16 +37,16 @@ class UserServiceTest {
 
     @Test
     void save_savesAndReturnsUser() {
-        when(userRepository.save(any(User.class))).thenReturn(mock(User.class));
+        when(userRepository.save(any(UserEntity.class))).thenReturn(mock(UserEntity.class));
 
-        userService.save(mock(User.class));
+        userService.save(mock(UserEntity.class));
 
-        verify(userRepository).save(any(User.class));
+        verify(userRepository).save(any(UserEntity.class));
     }
 
     @Test
     void getById_existingId_returnsUser() {
-        when(userRepository.findById(anyInt())).thenReturn(Optional.of(mock(User.class)));
+        when(userRepository.findById(anyInt())).thenReturn(Optional.of(mock(UserEntity.class)));
 
         userService.getById(anyInt());
 
@@ -63,18 +63,18 @@ class UserServiceTest {
 
     @Test
     void update_existingId_updatesAndReturnsUser() {
-        User existingUser = new User();
-        existingUser.setUsername("oldUsername");
-        User newUser = new User();
-        newUser.setUsername("newUsername");
+        UserEntity existingUserEntity = new UserEntity();
+        existingUserEntity.setUsername("oldUsername");
+        UserEntity newUserEntity = new UserEntity();
+        newUserEntity.setUsername("newUsername");
 
-        when(userRepository.findById(1)).thenReturn(Optional.of(existingUser));
-        when(userRepository.save(existingUser)).thenReturn(existingUser);
+        when(userRepository.findById(1)).thenReturn(Optional.of(existingUserEntity));
+        when(userRepository.save(existingUserEntity)).thenReturn(existingUserEntity);
 
-        userService.update(1, newUser);
+        userService.update(1, newUserEntity);
 
         verify(userRepository).findById(1);
-        verify(userRepository).save(existingUser);
+        verify(userRepository).save(existingUserEntity);
     }
 
 
