@@ -17,7 +17,7 @@
 			<a href="/ruleName/list">Rule</a>
 		</div>
 		<div class="col-6 text-right">
-			Logged in user: <b th:inline="text"  class="user"> mettre la connexion ici </b>
+			Logged in user: <b th:inline="text"  class="user" th:text="${username}">User</b>
 			<form th:action="@{/app-logout}" method="POST">
 				<input type="submit" value="Logout"/>
 			</form>
@@ -40,17 +40,17 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="ruleName : ${ruleNames}">
-					<td style="width: 10%" th:text="${ruleName.id}"></td>
-					<td th:text="${ruleName.name}"></td>
-					<td th:text="${ruleName.description}"></td>
-					<td th:text="${ruleName.json}"></td>
-					<td th:text="${ruleName.template}"></td>
-					<td th:text="${ruleName.sqlStr}"></td>
-					<td th:text="${ruleName.sqlPart}"></td>
+				<tr th:each="ruleNameEntity : ${ruleNames}">
+					<td style="width: 10%" th:text="${ruleNameEntity.id}"></td>
+					<td th:text="${ruleNameEntity.name}"></td>
+					<td th:text="${ruleNameEntity.description}"></td>
+					<td th:text="${ruleNameEntity.json}"></td>
+					<td th:text="${ruleNameEntity.template}"></td>
+					<td th:text="${ruleNameEntity.sqlStr}"></td>
+					<td th:text="${ruleNameEntity.sqlPart}"></td>
 					<td style="width: 15%" class="text-center">
-						<a th:href="@{/ruleName/update/{id}(id=${ruleName.id})}">Edit</a>&nbsp;|&nbsp;
-						<a th:href="@{/ruleName/delete/{id}(id=${ruleName.id})}">Delete</a>
+						<a th:href="@{/ruleName/update/{id}(id=${ruleNameEntity.id})}">Edit</a>&nbsp;|&nbsp;
+						<a th:href="@{/ruleName/delete/{id}(id=${ruleNameEntity.id})}">Delete</a>
 					</td>
 				</tr>
 			</tbody>

@@ -17,7 +17,7 @@
 			<a href="/trade/list">Rule</a>
 		</div>
 		<div class="col-6 text-right">
-			Logged in user: <b th:inline="text"  class="user"> mettre ici la connexion </b>
+			Logged in user: <b th:inline="text" class="user" th:text="${username}">User</b>
 			<form th:action="@{/app-logout}" method="POST">
 				<input type="submit" value="Logout"/>
 			</form>
@@ -37,14 +37,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="trade : ${trades}">
-					<td style="width: 10%" th:text="${trade.tradeId}"></td>
-					<td th:text="${trade.account}"></td>
-					<td th:text="${trade.type}"></td>
-					<td th:text="${trade.buyQuantity}"></td>
+				<tr th:each="tradeEntity : ${trades}">
+					<td style="width: 10%" th:text="${tradeEntity.tradeId}"></td>
+					<td th:text="${tradeEntity.account}"></td>
+					<td th:text="${tradeEntity.type}"></td>
+					<td th:text="${tradeEntity.buyQuantity}"></td>
 					<td style="width: 15%" class="text-center">
-						<a th:href="@{/trade/update/{id}(id=${trade.tradeId})}">Edit</a>&nbsp;|&nbsp;
-						<a th:href="@{/trade/delete/{id}(id=${trade.tradeId})}">Delete</a>
+						<a th:href="@{/trade/update/{id}(id=${tradeEntity.tradeId})}">Edit</a>&nbsp;|&nbsp;
+						<a th:href="@{/trade/delete/{id}(id=${tradeEntity.tradeId})}">Delete</a>
 					</td>
 				</tr>
 			</tbody>
