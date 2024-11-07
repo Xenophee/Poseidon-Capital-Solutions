@@ -1,7 +1,7 @@
 package com.nnk.springboot.service;
 
 
-import com.nnk.springboot.domain.CurvePoint;
+import com.nnk.springboot.domain.CurvePointEntity;
 import com.nnk.springboot.repositories.CurvePointRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
@@ -24,17 +24,17 @@ public class CurvePointService {
     }
 
 
-    public List<CurvePoint> getAll() {
+    public List<CurvePointEntity> getAll() {
         return curvePointRepository.findAll();
     }
 
 
-    public CurvePoint save(CurvePoint curvePoint) {
-        return curvePointRepository.save(curvePoint);
+    public CurvePointEntity save(CurvePointEntity curvePointEntity) {
+        return curvePointRepository.save(curvePointEntity);
     }
 
 
-    public CurvePoint getById(int id) {
+    public CurvePointEntity getById(int id) {
         return curvePointRepository.findById(id)
                 .orElseThrow(() -> {
                     logger.warn("Specified curve point not found : {}", id);
@@ -42,16 +42,16 @@ public class CurvePointService {
                 });
     }
 
-    public CurvePoint update(int id, CurvePoint curvePoint) {
+    public CurvePointEntity update(int id, CurvePointEntity curvePointEntity) {
 
-        CurvePoint curvePointToUpdate = getById(id);
-        curvePointToUpdate.setCurveId(curvePoint.getCurveId());
-        curvePointToUpdate.setTerm(curvePoint.getTerm());
-        curvePointToUpdate.setValue(curvePoint.getValue());
+        CurvePointEntity curvePointEntityToUpdate = getById(id);
+        curvePointEntityToUpdate.setCurveId(curvePointEntity.getCurveId());
+        curvePointEntityToUpdate.setTerm(curvePointEntity.getTerm());
+        curvePointEntityToUpdate.setValue(curvePointEntity.getValue());
 
-        if (!curvePoint.equals(curvePointToUpdate)) return curvePointToUpdate;
+        if (!curvePointEntity.equals(curvePointEntityToUpdate)) return curvePointEntityToUpdate;
 
-        return curvePointRepository.save(curvePointToUpdate);
+        return curvePointRepository.save(curvePointEntityToUpdate);
     }
 
     public void delete(int id) {

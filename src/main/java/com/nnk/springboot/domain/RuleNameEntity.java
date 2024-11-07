@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "rulename")
 @Data
 @NoArgsConstructor
-public class RuleName {
+public class RuleNameEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,7 +36,7 @@ public class RuleName {
     private String sqlPart;
 
 
-    public RuleName(String name, String description, String json, String template, String sqlStr, String sqlPart) {
+    public RuleNameEntity(String name, String description, String json, String template, String sqlStr, String sqlPart) {
         this.name = name;
         this.description = description;
         this.json = json;

@@ -1,6 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.CurvePoint;
+import com.nnk.springboot.domain.CurvePointEntity;
 import com.nnk.springboot.service.CurvePointService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.security.Principal;
 
 
 @Controller
@@ -28,52 +30,54 @@ public class CurvePointController {
     }
 
     @RequestMapping("/curvePoint/list")
-    public String home(Model model) {
+    public String home(Model model, Principal principal) {
+        model.addAttribute("username", principal.getName());
         model.addAttribute("curvePoints", curveService.getAll());
         return "curvePoint/list";
     }
 
     @GetMapping("/curvePoint/add")
     public String addCurveForm(Model model) {
-        model.addAttribute("curvePoint", new CurvePoint());
+        model.addAttribute("curvePointEntity", new CurvePointEntity());
         return "curvePoint/add";
     }
 
     @PostMapping("/curvePoint/validate")
-    public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
+    public String validate(@Valid CurvePointEntity curvePointEntity, BindingResult result, Model model) {
 
-        logger.info("Request to add CurvePoint: {}", curvePoint);
+        logger.info("Request to add CurvePointEntity: {}", curvePointEntity);
 
         if (result.hasErrors()) {
             logger.warn("Invalid data for registration : {}", result.getAllErrors());
             return "curvePoint/add";
         }
 
-        curveService.save(curvePoint);
-        logger.info("New curve point added : {}", curvePoint);
+        curveService.save(curvePointEntity);
+        logger.info("New curve point added : {}", curvePointEntity);
         return "redirect:/curvePoint/list";
     }
 
+
     @GetMapping("/curvePoint/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        CurvePoint curvePoint = curveService.getById(id);
-        model.addAttribute("curvePoint", curvePoint);
+        CurvePointEntity curvePointEntity = curveService.getById(id);
+        model.addAttribute("curvePointEntity", curvePointEntity);
         return "curvePoint/update";
     }
 
 
     @PostMapping("/curvePoint/update/{id}")
-    public String updateCurve(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint,
+    public String updateCurve(@PathVariable("id") Integer id, @Valid CurvePointEntity curvePointEntity,
                              BindingResult result, Model model) {
-        logger.info("Request to update curve point : {}", curvePoint);
+        logger.info("Request to update curve point : {}", curvePointEntity);
 
         if (result.hasErrors()) {
             logger.warn("Invalid data for registration : {}", result.getAllErrors());
             return "curvePoint/update";
         }
 
-        curveService.update(id, curvePoint);
-        logger.info("Curve point updated : {}", curvePoint);
+        curveService.update(id, curvePointEntity);
+        logger.info("Curve point updated : {}", curvePointEntity);
         return "redirect:/curvePoint/list";
     }
 

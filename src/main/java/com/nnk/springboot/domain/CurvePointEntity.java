@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "curvepoint")
 @Data
 @NoArgsConstructor
-public class CurvePoint {
+public class CurvePointEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,7 +35,7 @@ public class CurvePoint {
     private LocalDateTime creationDate;
 
 
-    public CurvePoint(Integer curveId, Double term, Double value) {
+    public CurvePointEntity(Integer curveId, Double term, Double value) {
         this.curveId = curveId;
         this.term = term;
         this.value = value;

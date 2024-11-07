@@ -1,7 +1,7 @@
 package com.nnk.springboot.service;
 
 
-import com.nnk.springboot.domain.User;
+import com.nnk.springboot.domain.UserEntity;
 import com.nnk.springboot.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -25,15 +24,15 @@ public class UserService {
     }
 
 
-    public List<User> getAll() {
+    public List<UserEntity> getAll() {
         return userRepository.findAll();
     }
 
-    public User save(User user) {
-        return userRepository.save(user);
+    public UserEntity save(UserEntity userEntity) {
+        return userRepository.save(userEntity);
     }
 
-    public User getById(int id) {
+    public UserEntity getById(int id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> {
                     logger.warn("Specified user not found : {}", id);
@@ -41,23 +40,23 @@ public class UserService {
                 });
     }
 
-    public User update(int id, User user) {
+    public UserEntity update(int id, UserEntity userEntity) {
 
-        User userToUpdate = getById(id);
-        userToUpdate.setUsername(user.getUsername());
-        userToUpdate.setFullname(user.getFullname());
-        userToUpdate.setRole(user.getRole());
-        userToUpdate.setPassword(user.getPassword());
+        UserEntity userEntityToUpdate = getById(id);
+        userEntityToUpdate.setUsername(userEntity.getUsername());
+        userEntityToUpdate.setFullname(userEntity.getFullname());
+        userEntityToUpdate.setRole(userEntity.getRole());
+        userEntityToUpdate.setPassword(userEntity.getPassword());
 
-        if (!user.equals(userToUpdate)) return userToUpdate;
+        if (!userEntity.equals(userEntityToUpdate)) return userEntityToUpdate;
 
-        return userRepository.save(userToUpdate);
+        return userRepository.save(userEntityToUpdate);
     }
 
     public void delete(int id) {
 
         if (!userRepository.existsById(id)) {
-            logger.warn("User with id {} not found for deletion", id);
+            logger.warn("UserEntity with id {} not found for deletion", id);
             throw new EntityNotFoundException("Specified user not found");
         }
 

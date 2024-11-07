@@ -1,7 +1,7 @@
 package com.nnk.springboot.service;
 
 
-import com.nnk.springboot.domain.Rating;
+import com.nnk.springboot.domain.RatingEntity;
 import com.nnk.springboot.repositories.RatingRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
@@ -24,16 +24,16 @@ public class RatingService {
     }
 
 
-    public List<Rating> getAll() {
+    public List<RatingEntity> getAll() {
         return ratingRepository.findAll();
     }
 
-    public Rating save(Rating rating) {
-        return ratingRepository.save(rating);
+    public RatingEntity save(RatingEntity ratingEntity) {
+        return ratingRepository.save(ratingEntity);
     }
 
 
-    public Rating getById(int id) {
+    public RatingEntity getById(int id) {
         return ratingRepository.findById(id)
                 .orElseThrow(() -> {
                     logger.warn("Specified rating not found : {}", id);
@@ -42,24 +42,24 @@ public class RatingService {
     }
 
 
-    public Rating update(int id, Rating rating) {
+    public RatingEntity update(int id, RatingEntity ratingEntity) {
 
-        Rating ratingToUpdate = getById(id);
-        ratingToUpdate.setMoodysRating(rating.getMoodysRating());
-        ratingToUpdate.setSandPRating(rating.getSandPRating());
-        ratingToUpdate.setFitchRating(rating.getFitchRating());
-        ratingToUpdate.setOrderNumber(rating.getOrderNumber());
+        RatingEntity ratingEntityToUpdate = getById(id);
+        ratingEntityToUpdate.setMoodysRating(ratingEntity.getMoodysRating());
+        ratingEntityToUpdate.setSandPRating(ratingEntity.getSandPRating());
+        ratingEntityToUpdate.setFitchRating(ratingEntity.getFitchRating());
+        ratingEntityToUpdate.setOrderNumber(ratingEntity.getOrderNumber());
 
-        if (!rating.equals(ratingToUpdate)) return ratingToUpdate;
+        if (!ratingEntity.equals(ratingEntityToUpdate)) return ratingEntityToUpdate;
 
-        return ratingRepository.save(ratingToUpdate);
+        return ratingRepository.save(ratingEntityToUpdate);
     }
 
 
     public void delete(int id) {
 
         if (!ratingRepository.existsById(id)) {
-            logger.warn("Rating with id {} not found for deletion", id);
+            logger.warn("RatingEntity with id {} not found for deletion", id);
             throw new EntityNotFoundException("Specified rating not found");
         }
 

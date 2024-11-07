@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "rating")
 @Data
 @NoArgsConstructor
-public class Rating {
+public class RatingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,7 +33,7 @@ public class Rating {
     private Integer orderNumber;
 
 
-    public Rating(String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {
+    public RatingEntity(String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {
         this.moodysRating = moodysRating;
         this.sandPRating = sandPRating;
         this.fitchRating = fitchRating;

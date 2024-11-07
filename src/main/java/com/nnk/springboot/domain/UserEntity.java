@@ -8,10 +8,11 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "users")
-public class User {
+public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
     private Integer id;
 
     @NotBlank(message = "Username is mandatory")

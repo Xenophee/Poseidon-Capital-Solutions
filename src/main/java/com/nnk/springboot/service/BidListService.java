@@ -1,6 +1,6 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.domain.BidListEntity;
 import com.nnk.springboot.repositories.BidListRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
@@ -24,15 +24,15 @@ public class BidListService {
     }
 
 
-    public List<BidList> getAll() {
+    public List<BidListEntity> getAll() {
         return bidListRepository.findAll();
     }
 
-    public BidList save(BidList bid) {
+    public BidListEntity save(BidListEntity bid) {
         return bidListRepository.save(bid);
     }
 
-    public BidList getById(int id) {
+    public BidListEntity getById(int id) {
         return bidListRepository.findById(id)
                 .orElseThrow(() -> {
                     logger.warn("Specified bid not found : {}", id);
@@ -40,9 +40,9 @@ public class BidListService {
                 });
     }
 
-    public BidList update(int id, BidList bid) {
+    public BidListEntity update(int id, BidListEntity bid) {
 
-        BidList bidToUpdate = getById(id);
+        BidListEntity bidToUpdate = getById(id);
         bidToUpdate.setAccount(bid.getAccount());
         bidToUpdate.setType(bid.getType());
         bidToUpdate.setBidQuantity(bid.getBidQuantity());

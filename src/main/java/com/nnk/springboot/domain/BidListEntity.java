@@ -3,6 +3,7 @@ package com.nnk.springboot.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,14 +11,14 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "trade")
+@Table(name = "bidlist")
 @Data
 @NoArgsConstructor
-public class Trade {
+public class BidListEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer TradeId;
+    private Integer bidListId;
 
     @NotEmpty(message = "Account is mandatory")
     @Size(min = 1, max = 30, message = "Account must be between 1 and 30 characters")
@@ -27,18 +28,20 @@ public class Trade {
     @Size(min = 1, max = 30, message = "Type must be between 1 and 30 characters")
     private String type;
 
-    @Min(value = 1, message = "Buy quantity must be greater than zero")
-    private Double buyQuantity;
+    @NotNull(message = "Bid quantity is mandatory") // Assure que la quantité n'est pas nulle
+    @Min(value = 0, message = "Bid quantity must be greater than or equal to zero")
+    private Double bidQuantity;
 
 
-    private Double sellQuantity;
-    private Double buyPrice;
-    private Double sellPrice;
-    private LocalDateTime tradeDate;
+    private Double askQuantity;
+    private Double bid;
+    private Double ask;
+    private String benchmark;
+    private LocalDateTime bidListDate;
+    private String commentary;
     private String security;
     private String status;
     private String trader;
-    private String benchmark;
     private String book;
     private String creationName;
     private LocalDateTime creationDate;
@@ -49,9 +52,10 @@ public class Trade {
     private String sourceListId;
     private String side;
 
-    public Trade(String account, String type, Double buyQuantity) {
+
+    public BidListEntity(String account, String type, Double bidQuantity) {
         this.account = account;
         this.type = type;
-        this.buyQuantity = buyQuantity;
+        this.bidQuantity = bidQuantity;
     }
 }

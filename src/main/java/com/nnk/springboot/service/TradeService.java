@@ -1,7 +1,7 @@
 package com.nnk.springboot.service;
 
 
-import com.nnk.springboot.domain.Trade;
+import com.nnk.springboot.domain.TradeEntity;
 import com.nnk.springboot.repositories.TradeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
@@ -24,15 +24,15 @@ public class TradeService {
     }
 
 
-    public List<Trade> getAll() {
+    public List<TradeEntity> getAll() {
         return tradeRepository.findAll();
     }
 
-    public Trade save(Trade trade) {
-        return tradeRepository.save(trade);
+    public TradeEntity save(TradeEntity tradeEntity) {
+        return tradeRepository.save(tradeEntity);
     }
 
-    public Trade getById(int id) {
+    public TradeEntity getById(int id) {
         return tradeRepository.findById(id)
                 .orElseThrow(() -> {
                     logger.warn("Specified trade not found : {}", id);
@@ -40,22 +40,22 @@ public class TradeService {
                 });
     }
 
-    public Trade update(int id, Trade trade) {
+    public TradeEntity update(int id, TradeEntity tradeEntity) {
 
-        Trade tradeToUpdate = getById(id);
-        tradeToUpdate.setAccount(trade.getAccount());
-        tradeToUpdate.setType(trade.getType());
-        tradeToUpdate.setBuyQuantity(trade.getBuyQuantity());
+        TradeEntity tradeEntityToUpdate = getById(id);
+        tradeEntityToUpdate.setAccount(tradeEntity.getAccount());
+        tradeEntityToUpdate.setType(tradeEntity.getType());
+        tradeEntityToUpdate.setBuyQuantity(tradeEntity.getBuyQuantity());
 
-        if (!trade.equals(tradeToUpdate)) return tradeToUpdate;
+        if (!tradeEntity.equals(tradeEntityToUpdate)) return tradeEntityToUpdate;
 
-        return tradeRepository.save(tradeToUpdate);
+        return tradeRepository.save(tradeEntityToUpdate);
     }
 
     public void delete(int id) {
 
         if (!tradeRepository.existsById(id)) {
-            logger.warn("Trade with id {} not found for deletion", id);
+            logger.warn("TradeEntity with id {} not found for deletion", id);
             throw new EntityNotFoundException("Specified trade not found");
         }
 

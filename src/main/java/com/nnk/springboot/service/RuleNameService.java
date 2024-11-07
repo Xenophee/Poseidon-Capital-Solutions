@@ -1,7 +1,7 @@
 package com.nnk.springboot.service;
 
 
-import com.nnk.springboot.domain.RuleName;
+import com.nnk.springboot.domain.RuleNameEntity;
 import com.nnk.springboot.repositories.RuleNameRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
@@ -24,15 +24,15 @@ public class RuleNameService {
     }
 
 
-    public List<RuleName> getAll() {
+    public List<RuleNameEntity> getAll() {
         return ruleNameRepository.findAll();
     }
 
-    public RuleName save(RuleName ruleName) {
-        return ruleNameRepository.save(ruleName);
+    public RuleNameEntity save(RuleNameEntity ruleNameEntity) {
+        return ruleNameRepository.save(ruleNameEntity);
     }
 
-    public RuleName getById(int id) {
+    public RuleNameEntity getById(int id) {
         return ruleNameRepository.findById(id)
                 .orElseThrow(() -> {
                     logger.warn("Specified rule name not found : {}", id);
@@ -40,19 +40,19 @@ public class RuleNameService {
                 });
     }
 
-    public RuleName update(int id, RuleName ruleName) {
+    public RuleNameEntity update(int id, RuleNameEntity ruleNameEntity) {
 
-        RuleName ruleNameToUpdate = getById(id);
-        ruleNameToUpdate.setName(ruleName.getName());
-        ruleNameToUpdate.setDescription(ruleName.getDescription());
-        ruleNameToUpdate.setJson(ruleName.getJson());
-        ruleNameToUpdate.setTemplate(ruleName.getTemplate());
-        ruleNameToUpdate.setSqlStr(ruleName.getSqlStr());
-        ruleNameToUpdate.setSqlPart(ruleName.getSqlPart());
+        RuleNameEntity ruleNameEntityToUpdate = getById(id);
+        ruleNameEntityToUpdate.setName(ruleNameEntity.getName());
+        ruleNameEntityToUpdate.setDescription(ruleNameEntity.getDescription());
+        ruleNameEntityToUpdate.setJson(ruleNameEntity.getJson());
+        ruleNameEntityToUpdate.setTemplate(ruleNameEntity.getTemplate());
+        ruleNameEntityToUpdate.setSqlStr(ruleNameEntity.getSqlStr());
+        ruleNameEntityToUpdate.setSqlPart(ruleNameEntity.getSqlPart());
 
-        if (!ruleName.equals(ruleNameToUpdate)) return ruleNameToUpdate;
+        if (!ruleNameEntity.equals(ruleNameEntityToUpdate)) return ruleNameEntityToUpdate;
 
-        return ruleNameRepository.save(ruleNameToUpdate);
+        return ruleNameRepository.save(ruleNameEntityToUpdate);
     }
 
     public void delete(int id) {

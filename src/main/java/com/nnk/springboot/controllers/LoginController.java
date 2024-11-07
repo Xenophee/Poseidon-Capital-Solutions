@@ -7,12 +7,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("app")
 public class LoginController {
 
+    private final UserRepository userRepository;
+
+
     @Autowired
-    private UserRepository userRepository;
+    public LoginController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @GetMapping("login")
     public ModelAndView login() {
@@ -30,8 +37,9 @@ public class LoginController {
     }
 
     @GetMapping("error")
-    public ModelAndView error() {
+    public ModelAndView error(Principal principal) {
         ModelAndView mav = new ModelAndView();
+        mav.addObject("username", principal.getName());
         String errorMessage= "You are not authorized for the requested data.";
         mav.addObject("errorMsg", errorMessage);
         mav.setViewName("403");
